@@ -1,0 +1,57 @@
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     constructor(val = 0, next = null) {
+ *         this.val = val;
+ *         this.next = next;
+ *     }
+ * }
+ */
+
+class Solution {
+    /**
+     * @param {ListNode} head
+     * @return {void}
+     */
+    reorderList(head) {
+        let mid = this.findMiddleNode(head)
+        let rHead = this.reverseLL(mid.next)
+        mid.next = null
+
+        let curr = head
+        while (rHead !== null) {
+            let cNxt = curr.next
+            let rNxt = rHead.next
+
+            curr.next = rHead
+            rHead.next = cNxt
+
+            rHead = rNxt
+            curr = cNxt
+        }
+        return head
+    }
+
+    findMiddleNode(head) {
+        let slow = head
+        let fast = head
+        while (fast.next !== null && fast.next.next !== null) {
+            slow = slow.next
+            fast = fast.next.next
+        }
+        return slow
+    }
+
+    reverseLL(head) {
+        let prev = null
+        let curr = head
+        while (curr !== null) {
+            let nxt = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nxt
+        }
+        return prev
+    }
+}
+
