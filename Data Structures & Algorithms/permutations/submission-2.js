@@ -1,0 +1,29 @@
+class Solution {
+    /**
+     * @param {number[]} nums
+     * @return {number[][]}
+     */
+    permute(nums) {
+        function solve(nums, temp, idx, isUsed) {
+            if (temp.length >= nums.length) {
+                result.push([...temp])
+                return
+            }
+            for (let i = 0; i < nums.length; i++) {
+                if (isUsed[i]) continue
+                isUsed[i] = true
+                temp.push(nums[i])
+                solve(nums, temp, idx + 1, isUsed)
+                isUsed[i] = false
+                temp.pop()
+            }
+        }
+
+        let result = []
+        let temp = []
+        let idx = 0
+        let isUsed = new Array(nums.length).fill(false)
+        solve(nums, temp, idx, isUsed)
+        return result
+    }
+}
